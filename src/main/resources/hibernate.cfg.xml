@@ -25,7 +25,7 @@
         <!-- Assume test is the database name -->
 
         <property name = "hibernate.connection.url">
-            jdbc:sqlserver://localhost;database=PlanApp;user=postgres;password=postgres;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;
+            jdbc:sqlserver://localhost;database=PlanApp;user=postgres;password=postgres;encrypt=true;trustServerCertificate=false;loginTimeout=30;
         </property>
 
         <!-- Echo all executed SQL to stdout -->
@@ -34,7 +34,8 @@
         <property name="hbm2ddl.auto">update</property> <!--create or update-->
 
         <!-- The mapping information of entities -->
-
+        <mapping class="models.Gebruiker"/>
+        <mapping class="models.PlanningCard"/>
         <!--  <mapping class="models.Example"/>  -->
 
 
