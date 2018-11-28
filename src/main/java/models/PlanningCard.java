@@ -2,22 +2,28 @@ package models;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.List;
+import java.util.*;
 
 @Entity
-@Table(name = "PlanningCard")
+@Table(name = "cards")
 public class PlanningCard {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "PlanningCard_Id", unique = true, nullable = false)
+    @Column(name = "cardid", unique = true, nullable = false)
     int id;
 
-    @NotNull
-    String Name;
+    @Column(name = "cardname")
+    String name;
+
+    @Column(name = "carddescription")
+    String cardDescription;
+
+    @Column(name = "deadline")
+    Date deadline;
 
     @ManyToMany(mappedBy = "planningCards")
-    List<Gebruiker> users;
+    private Set<Gebruiker> users = new HashSet<>();
 
     public int getId() {
         return id;
@@ -28,18 +34,48 @@ public class PlanningCard {
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
     public void setName(String name) {
-        Name = name;
+        this.name = name;
     }
 
-    public List<Gebruiker> getUsers() {
+    public String getCardDescription() {
+        return cardDescription;
+    }
+
+    public void setCardDescription(String cardDescription) {
+        this.cardDescription = cardDescription;
+    }
+
+    public Date getDeadline() {
+        return deadline;
+    }
+
+    public void setDeadline(Date deadline) {
+        this.deadline = deadline;
+    }
+
+    public Set<Gebruiker> getUsers() {
         return users;
     }
 
-    public void setUsers(List<Gebruiker> users) {
+    public void setUsers(Set<Gebruiker> users) {
         this.users = users;
+    }
+
+    public PlanningCard() {
+    }
+    public PlanningCard(String name, String cardDescription, Date deadline) {
+        this.name = name;
+        this.cardDescription = cardDescription;
+        this.deadline = deadline;
+    }
+    public PlanningCard(int id, String name, String cardDescription, Date deadline){
+        this.id = id;
+        this.name = name;
+        this.cardDescription = cardDescription;
+        this.deadline = deadline;
     }
 }

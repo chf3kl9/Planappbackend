@@ -7,10 +7,23 @@ import org.eclipse.jetty.servlets.CrossOriginFilter;
 import org.glassfish.jersey.servlet.ServletContainer;
 
 import javax.servlet.DispatcherType;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.util.EnumSet;
 
 public class RestServer {
     public static void main(String[] args) throws Exception {
+        /*String jdbcUrl = "jdbc:mysql://localhost:3306/planapp?useSSL=false";
+        String userid = "planapp";
+        String password = "planapp";
+
+        try{
+            Connection myConn = DriverManager.getConnection(jdbcUrl, userid, password);
+            System.out.println("Success");
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+        }*/
         ServletContextHandler context = new
                 ServletContextHandler(ServletContextHandler.SESSIONS);
         context.setContextPath("/");
