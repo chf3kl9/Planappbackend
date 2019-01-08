@@ -1,6 +1,7 @@
 package restserver.services;
 
 import com.google.gson.Gson;
+import logging.LogLevel;
 import logging.Logger;
 import models.Gebruiker;
 import models.PlanningCard;
@@ -15,7 +16,12 @@ import javax.ws.rs.core.Response;
 
 @Path("/planning")
 public class PlanService {
-    private IPlanHandler handler = new PlanHandler();
+    private static IPlanHandler handler;
+
+    public static void setHandler(IPlanHandler handler){
+        PlanService.handler = handler;
+    }
+
     Gson gson = new Gson();
 
     @POST
@@ -38,8 +44,10 @@ public class PlanService {
     @Path("/register")
     public Response register (String data){
         try {
+            Logger.getInstance().log(data, LogLevel.INFORMATION);
             Gebruiker gebruiker = gson.fromJson(data, Gebruiker.class);
             Reply reply = handler.register(gebruiker);
+            Logger.getInstance().log("REEEEE", LogLevel.DEBUG);
             return Response.status(reply.getStatus().getCode()).entity(reply.getMessage()).build();
         }
         catch(Exception e){
@@ -53,6 +61,7 @@ public class PlanService {
     @Path("/login")
     public Response login (String data){
         try {
+            Logger.getInstance().log(data, LogLevel.INFORMATION);
             Gebruiker gebruiker = gson.fromJson(data, Gebruiker.class);
             Reply reply = handler.login(gebruiker);
             return Response.status(reply.getStatus().getCode()).entity(reply.getMessage()).build();
@@ -63,7 +72,7 @@ public class PlanService {
         }
     }
 
-    @POST
+    /*@POST
     @Consumes("application/json")
     @Path("/addFriend")
     public Response addFriend (String data){
@@ -77,9 +86,9 @@ public class PlanService {
             Logger.getInstance().log(e);
             return Response.status(400).build();
         }
-    }
+    }*/
 
-    @DELETE
+    /*@DELETE
     @Consumes("application/json")
     @Path("/removeFriend")
     public Response removeFriend(String data){
@@ -93,17 +102,14 @@ public class PlanService {
             Logger.getInstance().log(e);
             return Response.status(400).build();
         }
-    }
+    }*/
 
-
-
-    @POST
+    @GET
     @Consumes("application/json")
-    @Path("/createCard")
-    public Response createCard (String data){
-        try {
-            PlanningCard card = gson.fromJson(data, PlanningCard.class);
-            Reply reply = handler.createCard(card);
+    @Path("/getCards/{id}")
+    public Response getCards(@PathParam("id") int userId){
+        try{
+            Reply reply = handler.getCardsByUser(userId);
             return Response.status(reply.getStatus().getCode()).entity(reply.getMessage()).build();
         }
         catch(Exception e){
@@ -112,7 +118,23 @@ public class PlanService {
         }
     }
 
+
     @POST
+    @Consumes("application/json")
+    @Path("/createCard")
+    public Response createCard (String data){
+        try {
+            PlanningCard card = gson.fromJson(data, PlanningCard.class);
+            Reply reply = handler.editCard(card);
+            return Response.status(reply.getStatus().getCode()).entity(reply.getMessage()).build();
+        }
+        catch(Exception e){
+            Logger.getInstance().log(e);
+            return Response.status(400).build();
+        }
+    }
+
+    /*@POST
     @Consumes("application/json")
     @Path("/addUserToCard")
     public Response addUserToCard (String data){
@@ -127,7 +149,7 @@ public class PlanService {
             Logger.getInstance().log(e);
             return Response.status(400).build();
         }
-    }
+    }*/
 
     @PUT
     @Consumes("application/json")
@@ -159,7 +181,7 @@ public class PlanService {
         }
     }
 
-    @DELETE
+    /*@DELETE
     @Consumes("application/json")
     @Path("/removeUserFromCard")
     public Response removeUserFromCard(String data){
@@ -173,6 +195,6 @@ public class PlanService {
             Logger.getInstance().log(e);
             return Response.status(400).build();
         }
-    }
+    }*/
 
 }

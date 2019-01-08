@@ -22,8 +22,11 @@ public class PlanningCard {
     @Column(name = "deadline")
     Date deadline;
 
-    @ManyToMany(mappedBy = "planningCards")
-    private Set<Gebruiker> users = new HashSet<>();
+    /*@ManyToMany(mappedBy = "planningCards")
+    private Set<Gebruiker> users = new HashSet<>();*/
+
+    @ManyToOne(cascade = { CascadeType.ALL})
+    private Gebruiker user;
 
     public int getId() {
         return id;
@@ -57,12 +60,20 @@ public class PlanningCard {
         this.deadline = deadline;
     }
 
-    public Set<Gebruiker> getUsers() {
+    /*public Set<Gebruiker> getUsers() {
         return users;
     }
 
     public void setUsers(Set<Gebruiker> users) {
         this.users = users;
+    }*/
+
+    public Gebruiker getUser(){
+        return user;
+    }
+
+    public void setUser(Gebruiker user){
+        this.user = user;
     }
 
     public PlanningCard() {

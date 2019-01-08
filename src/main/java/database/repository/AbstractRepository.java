@@ -3,6 +3,7 @@ package database.repository;
 import database.HibernateUtil;
 import database.Util;
 import database.specification.Specifiable;
+import logging.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -190,6 +191,7 @@ public abstract class AbstractRepository<T, Id extends Serializable> implements 
             return entity;
         } catch (RuntimeException e) {
             Util.logException(e);
+            Logger.getInstance().log(e);
             if (tx != null)
                 tx.rollback();
         } finally {

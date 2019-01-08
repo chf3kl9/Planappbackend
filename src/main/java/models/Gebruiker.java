@@ -1,6 +1,9 @@
 package models;
 
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.lang.reflect.Array;
@@ -18,14 +21,14 @@ public class Gebruiker {
     @Column(name = "userid", unique = true, nullable = false)
     int id;
 
-    @Column(name = "username")
+    @Column(name = "username", unique = true)
     String name;
 
     @Column(name = "password")
     String password;
 
 
-    @ManyToMany(mappedBy = "friended", cascade = CascadeType.ALL)
+    /*@ManyToMany(mappedBy = "friended", cascade = CascadeType.ALL)
     @JoinTable(name="friends",
             joinColumns={@JoinColumn(name="userid")},
             inverseJoinColumns={@JoinColumn(name="friendid")})
@@ -35,18 +38,21 @@ public class Gebruiker {
     @JoinTable(name="friends",
             joinColumns={@JoinColumn(name="friendid")},
             inverseJoinColumns={@JoinColumn(name="userid")})
-    private Set<Gebruiker> friended = new HashSet<>();
+    private Set<Gebruiker> friended = new HashSet<>();*/
 
 
 
-    @ManyToMany(cascade = {
+    /*@ManyToMany(cascade = {
             CascadeType.PERSIST,
             CascadeType.MERGE
     })
     @JoinTable(name = "usercards",
         joinColumns = @JoinColumn(name = "userid"),
-        inverseJoinColumns = @JoinColumn(name = "cardid"))
-    private List<PlanningCard> planningCards;
+        inverseJoinColumns = @JoinColumn(name = "cardid"))*/
+
+    /*@OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL)
+    @Fetch(value = FetchMode.SELECT)
+    private List<PlanningCard> planningCards;*/
 
     public int getId() {
         return id;
@@ -72,21 +78,21 @@ public class Gebruiker {
         this.password = password;
     }
 
-    public Set<Gebruiker> getFriends() {
+    /*public Set<Gebruiker> getFriends() {
         return friends;
     }
 
     public void setFriends(Set<Gebruiker> friends) {
         this.friends = friends;
-    }
+    }*/
 
-    public List<PlanningCard> getPlanningCards() {
+    /*public List<PlanningCard> getPlanningCards() {
         return planningCards;
     }
 
     public void setPlanningCards(List<PlanningCard> planningCards) {
         this.planningCards = planningCards;
-    }
+    }*/
 
     public Gebruiker(){}
     public Gebruiker(String name, String password){

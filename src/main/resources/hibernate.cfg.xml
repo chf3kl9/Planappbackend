@@ -23,12 +23,12 @@
         <!-- Set the current session context -->
         <property name="current_session_context_class">thread</property>
 
+        <property name="hbm2ddl.auto">create</property>
+
         <!-- The mapping information of entities -->
         <mapping class="models.Gebruiker"/>
         <mapping class="models.PlanningCard"/>
         <!--  <mapping class="models.Example"/>  -->
-
-
 
 
 
